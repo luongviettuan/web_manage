@@ -9,9 +9,6 @@ function App() {
               <MenuLeft />
               <div className="content-wrapper" style={{minHeight: '811px'}}>
 
-                  <section className="content-header">
-                      <h1>Khách Hàng<small>Quản Lý</small></h1>
-                  </section>
                   <section className="content">
                       <div id="fade-spinner"></div>
                       <div id="modal-spinner">
@@ -26,18 +23,14 @@ function App() {
                                   </div>
                               </div>
                               <div className="col-md-4 col-xs-6 offset-4">
-                                  <div className="form-group">
-                                      <form action="https://camera-cms.viettel.vn/servers?site_id=722#" method="get">
-                                          <div className="input-group">
-                                              <input type="hidden" name="site_id" value="722" />
-                                              <input type="text" name="q" value="" className="form-control" placeholder="Search ..." onchange="this.value = this.value.trim()" />
-                                              <span className="input-group-btn">
-                                      <button type="submit" id="search-btn-sharing" className="btn btn-flat"><i
-                                        className="fa fa-search"></i></button>
-                                    </span>
-                                          </div>
-                                      </form>
-                                  </div>
+                                    <div className="input-group">
+                                        <input
+                                            type="text"
+                                            name="q"
+                                            className="form-control"
+                                            placeholder="Nhập Từ Khóa Tìm Kiếm ..."
+                                        />
+                                    </div>
                               </div>
                           </div>
                           <div className="lisviewcontent">
@@ -46,10 +39,6 @@ function App() {
                                       <div className="box-body">
                                           <div id="w0" className="row">
                                               <div className="col-sm-12">
-                                                  <div className="item" data-key="147558"></div>
-                                                  <div className="item" data-key="123984"></div>
-                                                  <div className="item" data-key="43419"></div>
-                                                  <div className="item" data-key="43226"></div>
                                                   <table className="table">
                                                       <thead>
                                                           <tr>
