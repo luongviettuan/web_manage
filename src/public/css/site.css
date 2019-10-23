@@ -1,0 +1,257 @@
+html,
+body {
+    height: 100%;
+}
+
+.wrap {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px;
+    padding: 0 0 60px;
+}
+
+.wrap > .container {
+    padding: 70px 15px 20px;
+}
+
+.footer {
+    height: 60px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+
+.jumbotron {
+    text-align: center;
+    background-color: transparent;
+}
+
+.jumbotron .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+}
+
+.not-set {
+    color: #c55;
+    font-style: italic;
+}
+
+/* add sorting icons to gridview sort links */
+a.asc:after, a.desc:after {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    padding-left: 5px;
+}
+
+a.asc:after {
+    content: /*"\e113"*/ "\e151";
+}
+
+a.desc:after {
+    content: /*"\e114"*/ "\e152";
+}
+
+.sort-numerical a.asc:after {
+    content: "\e153";
+}
+
+.sort-numerical a.desc:after {
+    content: "\e154";
+}
+
+.sort-ordinal a.asc:after {
+    content: "\e155";
+}
+
+.sort-ordinal a.desc:after {
+    content: "\e156";
+}
+
+.grid-view th {
+    white-space: nowrap;
+}
+
+.hint-block {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+}
+
+.error-summary {
+    color: #a94442;
+    background: #fdf7f7;
+    border-left: 3px solid #eed3d7;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+  /* make sidebar nav vertical */ 
+@media (min-width: 100px) {
+  .sidebar-nav .navbar .navbar-collapse {
+    padding: 0;
+    max-height: none;
+    min-height:100px;
+  }
+  .sidebar-nav .navbar ul {
+    float: none;
+    display: block;
+  }
+  .sidebar-nav .navbar li {
+    float: none;
+    display: block;
+  }
+  .sidebar-nav .navbar li a {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}
+.control-camera{
+    margin-top: 20px;
+}
+#opacity-slider{
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+.controll-camera{
+    height: 100%;
+    width: 100%;
+    margin-left: 0px;
+    margin-top:15px;
+}
+#pie{
+    height: 126px;
+    width: 126px;
+}
+.ptzRow{
+    width:126px;
+    margin-top:5px;
+}
+
+.ptzText{
+    float:left;
+    width:65px;
+    text-align:left;
+}
+.ptzRow select{
+    width:52px;
+    font-size:14px;
+}
+
+.picRow{
+    width:126px;
+    height:38px;
+}
+
+.picRowLeft{
+    float:left;
+    height:34px;
+    width:34px;
+}
+
+.picRowRight{
+    float:right;
+    height:34px;
+    width:34px;
+}
+
+.picRowTest{
+    margin-top:12px;
+    float:left;
+    width:54px;
+}
+.options-camera{
+    margin-top: 20px;
+}
+
+.modal-video {
+    width: 90% !important;
+}
+.video_wrapper_nms {
+    /*width : 150px !important;*/
+    height: auto !important;
+    min-height: 100px !important;
+    margin-right: 5px;
+}
+.label-camera-nms {
+    /*font-size: 50% !important;*/
+}
+
+.btn-comment {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+/*    width: 50% !important;
+    height: 15% !important;*/
+    font-size: smaller !important;
+    /*padding: 0px !important;*/
+}
+
+.list-comment {
+    margin-left: 0px !important;
+    margin-right : 0px !important;
+    margin-top: 5px; 
+}
+
+.each-comment{
+    margin-top: 10px !important;
+    margin-right: 0px !important;
+    padding: 5px;
+}
+
+.comment-content{
+    margin-right: 15px !important;
+    padding-right: 0px !important;
+}
+
+.wrap-readmore {
+    display: block;
+}
+
+.wrap-readmore span {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.comment-textarea{
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.infor-comment {
+    padding-left: 5px;
+    padding-right: 5px;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    background: #eee;
+    margin-left: -3px !important;
+}
+.comment-contain {
+    padding-left: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 2px;
+}
+
+#list-comment-container {
+    margin-top: 20px;
+}
+
+#modal-comment .modal-content {
+    background: #D5D3D2 !important;
+}
+
+#form-comment {
+    border: 1px solid;
+    border-radius : 4px;
+}
+
+.option-display{
+    display: inline-block !important;
+    width: 75px !important;
+}
