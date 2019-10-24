@@ -186,3 +186,6 @@ tr:nth-child(odd) {background: #fff}
     background: #1e282c;
     border-left-color: #51ce88;
 }
+.btn-sm {
+    padding: .005rem .5rem
+}

@@ -1,36 +1,45 @@
 import React, {Component} from 'react';
+
 import Header from '../../common/header';
 import MenuLeft from '../../common/menu_left';
 import Title from '../../common/title';
+import ListOrder from './list_order';
 
-
-
-export default class Statistic extends Component{
+export default class Order extends Component{
+    constructor(props){
+        super(props);
+        this.state ={
+            listOrder : [
+                {
+                    stt: 1,
+                    order_id: '12d4ds',
+                    status: "3"
+                },
+                {
+                    stt: 2,
+                    order_id: '13dd54',
+                    status: "2"
+                }
+            ]
+        }
+    }
     render(){
+        const {listOrder} = this.state;
         return(
             <div className="skin-blue sidebar-mini">
                 <div className="wrapper">
                     <Header />
                     <MenuLeft />
                     <div className="content-wrapper" style={{minHeight: '811px'}}>
-                        <Title title='Thống Kê'/>
-                        {/* <section className="content">
+                        <Title title='Đơn Hàng' />
+                        <section className="content">
                             <div id="fade-spinner"></div>
                             <div id="modal-spinner">
                                 <img id="loader" src={require( '../../public/img/icon/loading_spinner.gif')} alt="" />
                             </div>
                             <div className="servers-index">
                                 <div className="row actionServer top">
-                                    <div className="col-md-4 col-xs-6 ">
-                                        <div className="form-group">
-                                            <Link to='/'>
-                                                <Button color="success">
-                                                    Tạo Mới
-                                                </Button>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-4 col-xs-6 offset-4">
+                                    <div className="col-md-4 col-xs-6 offset-8">
                                             <div className="input-group">
                                                 <input
                                                     type="text"
@@ -51,14 +60,13 @@ export default class Statistic extends Component{
                                                             <thead>
                                                                 <tr>
                                                                     <th>STT</th>
-                                                                    <th>Họ Tên</th>
-                                                                    <th>Tên Đăng Nhập</th>
-                                                                    <th>Số Điện Thoại</th>
-                                                                    <th></th>
+                                                                    <th>Mã Đơn Hàng</th>
+                                                                    <th>Chi Tiết Đơn Hàng</th>
+                                                                    <th>Trạng Thái</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                
+                                                                <ListOrder listOrder={listOrder} />
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -69,7 +77,7 @@ export default class Statistic extends Component{
                                 </div>
 
                             </div>
-                        </section> */}
+                        </section>
                     </div>
                 </div>
             </div>

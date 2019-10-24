@@ -35,11 +35,11 @@ export default class Category extends Component{
                     <Header />
                     <MenuLeft />
                     <div className="content-wrapper" style={{minHeight: '811px'}}>
-                        <Title />
+                        <Title title='Loại Sản Phẩm' />
                         <section className="content">
                             <div id="fade-spinner"></div>
                             <div id="modal-spinner">
-                                <img id="loader" src={require( '../../public/img/icon/loading_spinner.gif')} alt="" />
+                                <img id="loader" src={require('../../public/img/icon/loading_spinner.gif')} alt="" />
                             </div>
                             <div className="servers-index">
                                 <div className="row actionServer top">

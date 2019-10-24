@@ -32,7 +32,7 @@ export default class Brand extends Component{
                     <Header />
                     <MenuLeft />
                     <div className="content-wrapper" style={{minHeight: '811px'}}>
-                        <Title />
+                        <Title title='Thương Hiệu' />
                         <section className="content">
                             <div id="fade-spinner"></div>
                             <div id="modal-spinner">

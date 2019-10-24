@@ -35,7 +35,7 @@ export default class User extends Component{
                     <Header />
                     <MenuLeft />
                     <div className="content-wrapper" style={{minHeight: '811px'}}>
-                        <Title />
+                        <Title title='Khách Hàng'/>
                         <section className="content">
                             <div id="fade-spinner"></div>
                             <div id="modal-spinner">
