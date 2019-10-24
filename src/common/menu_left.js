@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { IconContext } from "react-icons";
-import {FaServer, FaUserCog, FaInfoCircle } from "react-icons/fa";
+import {FaServer, FaUserCog, FaInfoCircle, FaShippingFast } from "react-icons/fa";
 import {IoIosTrendingUp} from "react-icons/io";
+import {Link} from 'react-router-dom';
 export default class MenuLeft extends Component {
     render() {
         const style = {
@@ -14,55 +15,61 @@ export default class MenuLeft extends Component {
                     <section className="sidebar" style={{ height: 'auto' }}>
                         <ul className="sidebar-menu">
                             <li className="active treeview">
-                                <a href="https://camera-cms.viettel.vn/sitessub?site_id=722">
+                                <Link to='/'>
                                     <IoIosTrendingUp />
                                     <span> Thống Kê</span>
-                                </a>
+                                </Link>
                             </li>
                             <li className="treeview active">
-                                <a href="https://camera-cms.viettel.vn/servers?site_id=722#">
+                                <Link to='/'>
                                     <FaUserCog />
                                     <span> Quản Lý Web</span>
                                     <i className="fa fa-angle-left pull-right"></i>
-                                </a>
+                                </Link>
                                 <ul className="treeview-menu" style={{ display: 'block' }}>
                                     <li>
-                                        <a href="https://camera-cms.viettel.vn/user?site_id=722&amp;type=1">
-                                        <FaServer /> Quản Lý Khách Hàng
-                                        </a>
+                                        <Link to='/user'>
+                                            <FaServer /> Quản Lý Khách Hàng
+                                        </Link>
                                     </li>
                                     <li>
-                                        <a href="https://camera-cms.viettel.vn/user?site_id=722&amp;type=2">
+                                        <Link to="/product">
                                             <FaServer /> Quản Lý Sản Phẩm
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li>
-                                        <a href="https://camera-cms.viettel.vn/sites/update?id=722&amp;site_id=722">
+                                        <Link to="/category">
                                             <FaServer /> Quản Lý Loại Sản Phẩm
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li>
-                                        <a href="https://camera-cms.viettel.vn/batchgoods?site_id=722">
+                                        <Link to="/brand">
                                             <FaServer /> Quản Lý Thương Hiệu
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li>
-                                        <a href="https://camera-cms.viettel.vn/cameraconfig?site_id=722">
+                                        <Link to="/voucher">
                                             <FaServer /> Quản Lý Voucher
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li>
-                                        <a href="https://camera-cms.viettel.vn/cdn?site_id=722">
+                                        <Link to="/color">
                                             <FaServer /> Quản Lý Màu Sắc
-                                        </a>
+                                        </Link>
                                     </li>
                                 </ul>
                             </li>
                             <li className="treeview active">
-                                <a href="https://camera-cms.viettel.vn/servers?site_id=722#">
+                                <Link to="/order">
+                                    <FaShippingFast />
+                                    <span> Trạng Thái Đơn Hàng</span>
+                                </Link>
+                            </li>
+                            <li className="treeview active">
+                                <Link to="/about">
                                     <FaInfoCircle />
                                     <span> Thông Tin</span>
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </section>
