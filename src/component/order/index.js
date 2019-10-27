@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import {Button} from 'reactstrap';
 import Header from '../../common/header';
 import MenuLeft from '../../common/menu_left';
 import Title from '../../common/title';
@@ -39,7 +39,10 @@ export default class Order extends Component{
                             </div>
                             <div className="servers-index">
                                 <div className="row actionServer top">
-                                    <div className="col-md-4 col-xs-6 offset-8">
+                                    <div className="col-md-4 col-xs-6">
+                                        <Button color="success">Lưu Trạng Thái</Button>
+                                    </div>
+                                    <div className="col-md-4 col-xs-6 offset-4">
                                             <div className="input-group">
                                                 <input
                                                     type="text"

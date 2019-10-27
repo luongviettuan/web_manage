@@ -6,10 +6,10 @@ export default class ListUser extends Component {
     render() {
         const { listUser } = this.props
         return (
-            listUser && listUser.map(user =>
-                <tr key={user.stt}>
-                    <td className="styleStt">{user.stt}</td>
-                    <td>{user.fullName}</td>
+            listUser && listUser.map((user, index) =>
+                <tr key={index}>
+                    <td className="styleStt">{index+1}</td>
+                    <td>{user.full_name}</td>
                     <td>{user.username}</td>
                     <td>{user.phone_number}</td>
                     <td>

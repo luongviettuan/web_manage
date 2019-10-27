@@ -41,7 +41,7 @@ export default class Color extends Component{
                                 <div className="row actionServer top">
                                     <div className="col-md-4 col-xs-6 ">
                                         <div className="form-group">
-                                            <Link to='/'>
+                                            <Link to='/color/add'>
                                                 <Button color="success">
                                                     Tạo Mới
                                                 </Button>

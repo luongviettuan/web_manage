@@ -7,25 +7,47 @@ import Header from '../../common/header';
 import MenuLeft from '../../common/menu_left';
 import Title from '../../common/title';
 import ListCategory from './list_category';
+import axios from 'axios';
 
 export default class Category extends Component{
     constructor(props){
         super(props);
         this.state = {
-            listCategory : [
-                {
-                    stt : 1,
-                    category_name: 'Quần',
-                    number: 100
-                },
-                {
-                    stt : 2,
-                    category_name: 'Áo Khoác',
-                    number: 150
-                }
-
-            ]
+            q : '',
+            listCategory : []
         }
+        this.handleChange = this.handleChange.bind(this)
+    }
+    handleChange(event) {
+        const { name, value } = event.target;
+        this.setState({
+            [name]: value
+        })
+    }
+    componentDidUpdate(prevProps, prevState){
+        const {q} = this.state;
+        if(q !== prevState.q){
+            axios.post('http://localhost:8080/category/find_category', {q : q})
+            .then(rs => {
+                if (rs.data.code === 200) {
+                    const listCategory = rs.data.result;                   
+                    this.setState({
+                        listCategory: listCategory
+                    })
+                }
+            })
+        }
+    }
+    componentDidMount(){
+        axios.get('http://localhost:8080/category',)
+            .then(res =>{
+                if(res.data.code === 200){
+                    const listCategory = res.data.result
+                    this.setState({
+                        listCategory : listCategory
+                    })
+                }
+            })
     }
     render(){
         const {listCategory} = this.state;
@@ -45,7 +67,7 @@ export default class Category extends Component{
                                 <div className="row actionServer top">
                                     <div className="col-md-4 col-xs-6 ">
                                         <div className="form-group">
-                                            <Link to='/'>
+                                            <Link to='/category/add'>
                                                 <Button color="success">
                                                     Tạo Mới
                                                 </Button>
@@ -59,6 +81,8 @@ export default class Category extends Component{
                                                     name="q"
                                                     className="form-control"
                                                     placeholder="Nhập Từ Khóa Tìm Kiếm ..."
+                                                    value={this.state.q}
+                                                    onChange = {this.handleChange}
                                                 />
                                             </div>
                                     </div>

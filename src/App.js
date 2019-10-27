@@ -9,17 +9,29 @@ import Statistic from './component/statistic/index'
 import Voucher from './component/voucher/index';
 import Color from './component/color/index';
 import Order from './component/order/index';
+import AddUser from './component/user/add_user';
+import AddProduct from './component/product/add_product';
+import AddCategory from './component/category/add_category';
+import AddBrand from './component/brand/add_brand';
+import AddVoucher from './component/voucher/add_voucher';
+import AddColor from './component/color/add_color';
 
 function App() {
   return (
             <Router>
                 <Switch>
                     <Route path='/' exact component={Statistic} />
+                    <Route path='/user/add' component={AddUser} />
                     <Route path='/user' component={User} />
+                    <Route path='/product/add' component={AddProduct} />
                     <Route path='/product' component={Product} />
+                    <Route path='/category/add' component={AddCategory} />
                     <Route path='/category' component={Category} />
+                    <Route path='/brand/add' component={AddBrand} />
                     <Route path='/brand' component={Brand} />
+                    <Route path='/voucher/add' component={AddVoucher} />
                     <Route path='/voucher' component={Voucher} />
+                    <Route path='/color/add' component={AddColor} />
                     <Route path='/color' component={Color} />
                     <Route path='/order' component={Order} />
                 </Switch>

@@ -6,11 +6,11 @@ export default class ListCategory extends Component{
     render(){
         const {listCategory} = this.props;
         return(
-            listCategory && listCategory.map(category =>
-                <tr key={category.stt}>
-                    <td className="styleStt">{category.stt}</td>
+            listCategory && listCategory.map((category, index) =>
+                <tr key={index+1}>
+                    <td className="styleStt">{index+1}</td>
                     <td>{category.category_name}</td>
-                    <td>{category.number}</td>
+                    <td>{category.quatity}</td>
                     <td>
                         <Link to='/'>
                             <FaEdit />

@@ -189,3 +189,6 @@ tr:nth-child(odd) {background: #fff}
 .btn-sm {
     padding: .005rem .5rem
 }
+.offset-10 {
+    margin-left: 82.333333%;
+}

@@ -6,23 +6,47 @@ import Header from '../../common/header';
 import MenuLeft from '../../common/menu_left';
 import Title from '../../common/title';
 import ListBrand from '../brand/list_brand'
+import Axios from 'axios';
 export default class Brand extends Component{
     constructor(props){
         super(props);
         this.state ={
-            listBrand : [
-                {
-                    stt: 1,
-                    brand_name: 'Adtisno',
-                    number: 120
-                },
-                {
-                    stt: 2,
-                    brand_name: 'Puma',
-                    number: 150
-                }
-            ]
+            q :'',
+            listBrand : []
         }
+        this.handleChange = this.handleChange.bind(this)
+    }
+    // 
+    handleChange(event){
+        const {name, value} = event.target;
+        this.setState({
+            [name] : value
+        })
+    }
+    componentDidUpdate(prevProps, prevState){
+        const {q} = this.state;
+        if(q !== prevState.q){
+            Axios.post('http://localhost:8080/brand/find_info_brand',{q : q})
+                .then(res =>{
+                    if(res.data.code === 200){
+                        const listBrand = res.data.result;
+                        this.setState({
+                            listBrand : listBrand
+                        })
+                    }
+                })
+        }
+    }
+    componentDidMount(){
+        Axios.get('http://localhost:8080/brand')
+            .then(res =>{
+                if(res.data.code === 200){
+                    const listBrand = res.data.result;
+                    this.setState({
+                        listBrand : listBrand
+                    })
+                }
+            })
     }
     render(){
         const {listBrand} = this.state;
@@ -42,7 +66,7 @@ export default class Brand extends Component{
                                 <div className="row actionServer top">
                                     <div className="col-md-4 col-xs-6 ">
                                         <div className="form-group">
-                                            <Link to='/'>
+                                            <Link to='/brand/add'>
                                                 <Button color="success">
                                                     Tạo Mới
                                                 </Button>
@@ -56,6 +80,8 @@ export default class Brand extends Component{
                                                     name="q"
                                                     className="form-control"
                                                     placeholder="Nhập Từ Khóa Tìm Kiếm ..."
+                                                    value={this.state.q}
+                                                    onChange={this.handleChange}
                                                 />
                                             </div>
                                     </div>

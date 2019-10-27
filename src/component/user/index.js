@@ -1,51 +1,73 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
+
+import axios from 'axios';
 
 import Header from '../../common/header';
 import MenuLeft from '../../common/menu_left';
 import Title from '../../common/title';
 import ListUser from './list_user';
 
-export default class User extends Component{
-    constructor(props){
-         super(props);
-         this.state={
-            listUser : [
-                {
-                    stt: 1,
-                    fullName: 'Lường Viết Tuấn',
-                    username: 'TuanLV',
-                    phone_number: '0339196335'
-                },
-                {
-                    stt: 2,
-                    fullName: 'Lường Viết Tú',
-                    username: 'TuLV',
-                    phone_number: '0339196336'
-                }
-            ]
-         }
+export default class User extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            q: '',
+            listUser: []
+        }
+        this.handleChange = this.handleChange.bind(this)
     }
-    render(){
-        const {listUser} = this.state
-        return(
+    handleChange(event) {
+        const {name, value} = event.target;
+        this.setState({
+            [name] : value
+        })
+    }
+    componentDidUpdate(prevProps, prevState){
+        const {q} = this.state;
+        if(q !== prevState.q){
+            axios.post('http://localhost:8080/user/find_user', {q : q})
+            .then(rs => {
+                if (rs.data.code === 200) {
+                    const listUser = rs.data.result;                   
+                    this.setState({
+                        listUser: listUser
+                    })
+                }
+            })
+        }
+    }
+    componentDidMount() {
+        axios.get('http://localhost:8080/user/get_all_user')
+            .then(rs => {
+                if (rs.data.code === 200) {
+                    const listUser = rs.data.result;
+                    this.setState({
+                        listUser: listUser
+                    })
+                }
+            })
+    }
+    render() {
+        const { listUser } = this.state
+        return (
             <div className="skin-blue sidebar-mini">
                 <div className="wrapper">
                     <Header />
                     <MenuLeft />
-                    <div className="content-wrapper" style={{minHeight: '811px'}}>
-                        <Title title='Khách Hàng'/>
+                    <div className="content-wrapper" style={{ minHeight: '811px' }}>
+                        <Title title='Khách Hàng' />
                         <section className="content">
                             <div id="fade-spinner"></div>
                             <div id="modal-spinner">
-                                <img id="loader" src={require( '../../public/img/icon/loading_spinner.gif')} alt="" />
+                                <img id="loader" src={require('../../public/img/icon/loading_spinner.gif')} alt="" />
                             </div>
                             <div className="servers-index">
                                 <div className="row actionServer top">
                                     <div className="col-md-4 col-xs-6 ">
                                         <div className="form-group">
-                                            <Link to='/'>
+                                            <Link to='/user/add'>
                                                 <Button color="success">
                                                     Tạo Mới
                                                 </Button>
@@ -53,14 +75,16 @@ export default class User extends Component{
                                         </div>
                                     </div>
                                     <div className="col-md-4 col-xs-6 offset-4">
-                                            <div className="input-group">
-                                                <input
-                                                    type="text"
-                                                    name="q"
-                                                    className="form-control"
-                                                    placeholder="Nhập Từ Khóa Tìm Kiếm ..."
-                                                />
-                                            </div>
+                                        <div className="input-group">
+                                            <input
+                                                type="text"
+                                                name="q"
+                                                className="form-control"
+                                                placeholder="Nhập Từ Khóa Tìm Kiếm ..."
+                                                value={this.state.q}
+                                                onChange={this.handleChange}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="lisviewcontent">
