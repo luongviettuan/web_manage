@@ -6,24 +6,47 @@ import Header from '../../common/header';
 import MenuLeft from '../../common/menu_left';
 import Title from '../../common/title';
 import ListVoucher from './list_voucher'
+import Axios from 'axios';
 
 export default class Voucher extends Component{
     constructor(props){
         super(props);
         this.state ={
-            listVoucher : [
-                {
-                    stt: 1,
-                    voucher_id: 'NOEL100K',
-                    voucher_name: 'Miễn giảm 100K'
-                },
-                {
-                    stt: 2,
-                    voucher_id: 'TRUNGTHU5',
-                    voucher_name: 'Miễn Giảm 5% Tổng Hoá Đơn'
-                }
-            ]
+            q: '',
+            listVoucher : []
         }
+        this.handleChange = this.handleChange.bind(this);
+    }
+    handleChange(event){
+        const {name, value} = event.target;
+        this.setState({
+            [name] : value
+        })
+    }
+    componentDidUpdate(prevProps, prevState){
+        const {q} = this.state;
+        if(q !== prevState.q){
+            Axios.post('http://localhost:8080/voucher/find_voucher', {q : q})
+                .then(res =>{
+                    if(res.data.code === 200){
+                        const listVoucher = res.data.result;
+                        this.setState({
+                            listVoucher : listVoucher
+                        })
+                    }
+                })
+        }
+    }
+    componentDidMount(){
+        Axios.get('http://localhost:8080/voucher')
+            .then(res=>{
+                if(res.data.code === 200){
+                    const listVoucher = res.data.result
+                    this.setState({
+                        listVoucher : listVoucher
+                    })
+                }
+            })
     }
     render(){
         const {listVoucher} = this.state;
@@ -57,6 +80,8 @@ export default class Voucher extends Component{
                                                     name="q"
                                                     className="form-control"
                                                     placeholder="Nhập Từ Khóa Tìm Kiếm ..."
+                                                    value={this.state.q}
+                                                    onChange={this.handleChange}
                                                 />
                                             </div>
                                     </div>

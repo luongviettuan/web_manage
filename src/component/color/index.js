@@ -6,22 +6,48 @@ import Header from '../../common/header';
 import MenuLeft from '../../common/menu_left';
 import Title from '../../common/title';
 import ListColor from './list_color';
+import Axios from 'axios';
 
 export default class Color extends Component{
     constructor(props){
         super(props);
         this.state ={
-            listColor : [
-                {
-                    stt: 1,
-                    color_name: 'Đỏ'
-                },
-                {
-                    stt: 2,
-                    color_name: 'Xanh'
-                }
-            ]
+            q: '',
+            listColor : []
         }
+        this.handleChange = this.handleChange.bind(this)
+    }
+    handleChange(event){
+        const {name, value} = event.target;
+        this.setState({
+            [name] : value
+        })
+    }
+    componentDidUpdate(prevProps,prevState){
+        const {q} = this.state;
+        if(q !== prevState.q){
+            Axios.post('http://localhost:8080/color/find_color', {q: q})
+                .then(res =>{
+                    if(res.data.code === 200){
+                        const listColor = res.data.result
+                        this.setState({
+                            listColor :listColor
+                        })
+                    }
+                })
+        }
+    }
+    componentDidMount(){
+        Axios.get('http://localhost:8080/color')
+            .then(res =>{
+                if(res.data.code === 200){
+                    const listColor = res.data.result;
+                    this.setState({
+                        listColor: listColor
+                    })
+                }
+            })
+        
     }
     render(){
         const {listColor} = this.state;
@@ -55,6 +81,8 @@ export default class Color extends Component{
                                                     name="q"
                                                     className="form-control"
                                                     placeholder="Nhập Từ Khóa Tìm Kiếm ..."
+                                                    value={this.state.q}
+                                                    onChange={this.handleChange}
                                                 />
                                             </div>
                                     </div>
