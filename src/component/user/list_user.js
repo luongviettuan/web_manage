@@ -13,7 +13,7 @@ export default class ListUser extends Component {
                     <td>{user.username}</td>
                     <td>{user.phone_number}</td>
                     <td>
-                        <Link to='/'>
+                        <Link to={`/user/${user.user_id}`}>
                             <FaEdit />
                         </Link>
                     </td>

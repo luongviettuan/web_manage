@@ -9,7 +9,7 @@ import ModalInfo from '../../common/modal_info';
 
 import Axios from 'axios';
 
-export default class AddVoucher extends Component {
+export default class UpdateDeleteVoucher extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,7 +21,8 @@ export default class AddVoucher extends Component {
             unit: ''
         }
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
     handleChange(event) {
         const { name, value } = event.target;
@@ -29,33 +30,58 @@ export default class AddVoucher extends Component {
             [name]: value
         })
     }
-    handleSubmit() {
-        const { voucher_id, voucher_name, discount, unit } = this.state;
-        if (voucher_id && voucher_name && discount && unit) {
-            Axios.post('http://localhost:8080/voucher/create_voucher',
+    handleUpdate(){
+        const voucher_id = this.props.match.params.id;
+        const {voucher_name, discount, unit} = this.state;
+        if(voucher_id && voucher_name && discount && unit){
+            Axios.post('http://localhost:8080/voucher/update_info_voucher',
                 {
                     voucher_id,
                     voucher_name,
                     discount,
                     unit
                 }
-            ).then(res => {
-                if (res.data.code === 200) {
-                    this.setState({
-                        message: res.data.message,
-                        modal: true
-                    })
-                }
-                else{
-                    this.setState({
-                        message: res.data.message
-                    }, ()=>{alert(this.state.message)})
-                }
+            ).then(res=>{
+                this.setState({
+                    message: res.data.message,
+                    modal: true
+                })
+                
             })
         }
     }
+    handleDelete(){
+        const voucher_id = this.props.match.params.id;
+        if(voucher_id){
+            Axios.post('http://localhost:8080/voucher/delete_info_voucher',
+                {
+                    voucher_id,
+                }
+            ).then(res=>{
+                this.setState({
+                    message: res.data.message,
+                    modal: true
+                })
+                
+            })
+        }
+    }
+    componentDidMount(){
+        const voucher_id = this.props.match.params.id;
+        Axios.post('http://localhost:8080/voucher/get_info_voucher', {voucher_id})
+            .then(res =>{
+                const voucher = res.data.result
+                this.setState({
+                    voucher_id: voucher.voucher_id,
+                    voucher_name: voucher.voucher_name,
+                    unit: voucher.unit,
+                    discount: voucher.discount,
+                })
+            })
+    }
     render() {
         const {modal,message} = this.state
+       
         return (
             <div className="skin-blue sidebar-mini">
                 <div className="wrapper">
@@ -65,8 +91,11 @@ export default class AddVoucher extends Component {
                         <Title title='Mã Giảm Giá' />
                         <section className="content">
                             <div className="row">
-                                <div className="col-xs-4 col-sm-4 offset-10">
-                                    <Button color='success' onClick={this.handleSubmit}>Thêm Mới</Button>{' '}
+                                <div className="col-xs-6 col-sm-6">
+                                <Button color='danger' onClick={this.handleDelete}>Xoá Bỏ</Button>{' '}
+                                </div>
+                                <div className="col-xs-6 col-sm-6 text-right">
+                                    <Button color='success' onClick={this.handleUpdate}>Cập Nhật</Button>{' '}
                                     <Link to='/voucher'>
                                         <Button color='danger'>Huỷ Bỏ</Button>
                                     </Link>
@@ -87,7 +116,7 @@ export default class AddVoucher extends Component {
                                                         className="form-control"
                                                         value={this.state.voucher_id}
                                                         name="voucher_id"
-                                                        onChange={this.handleChange}
+                                                        disabled
                                                     />
                                                 </div>
                                             </div>
@@ -131,6 +160,7 @@ export default class AddVoucher extends Component {
                                                             name="unit"
                                                             value="VNĐ"
                                                             onChange={this.handleChange}
+                                                            checked={this.state.unit === 'VNĐ'}
                                                         />
                                                         <label className="form-check-label">
                                                             <strong>VNĐ</strong>
@@ -143,6 +173,7 @@ export default class AddVoucher extends Component {
                                                             name="unit"
                                                             value="%"
                                                             onChange={this.handleChange}
+                                                            checked={this.state.unit === '%'}
                                                         />
                                                         <label className="form-check-label">
                                                             <strong>%</strong>

@@ -13,7 +13,7 @@ export default class ListVoucher extends Component{
                     <td>{voucher.voucher_id}</td>
                     <td>{voucher.voucher_name}</td>
                     <td>
-                        <Link to='/'>
+                        <Link to={`/voucher/${voucher.voucher_id}`}>
                             <FaEdit />
                         </Link>
                     </td>

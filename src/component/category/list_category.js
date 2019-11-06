@@ -12,7 +12,7 @@ export default class ListCategory extends Component{
                     <td>{category.category_name}</td>
                     <td>{category.quatity}</td>
                     <td>
-                        <Link to='/'>
+                        <Link to={`/category/${category.category_id}`}>
                             <FaEdit />
                         </Link>
                     </td>
