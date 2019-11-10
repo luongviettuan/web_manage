@@ -19,6 +19,8 @@ import UpdateDeleteUser from './component/user/update_delete_user';
 import UpdateDeleteCategory from './component/category/update_delete_category';
 import UpdateDeleteColor from './component/color/update_delete_color';
 import UpdateDeleteVoucher from './component/voucher/update_delete_voucher';
+import UpdateDeleteBrand from './component/brand/update_delete_brand';
+import UpdateDeleteProduct from './component/product/update_delete_product';
 
 function App() {
   return (
@@ -29,11 +31,13 @@ function App() {
                     <Route path='/user/:id' component={UpdateDeleteUser} />
                     <Route path='/user' component={User} />
                     <Route path='/product/add' component={AddProduct} />
+                    <Route path='/product/:id' component ={UpdateDeleteProduct} />
                     <Route path='/product' component={Product} />
                     <Route path='/category/add' component={AddCategory} />
                     <Route path='/category/:id' component={UpdateDeleteCategory} />
                     <Route path='/category' component={Category} />
                     <Route path='/brand/add' component={AddBrand} />
+                    <Route path='/brand/:id' component={UpdateDeleteBrand} />
                     <Route path='/brand' component={Brand} />
                     <Route path='/voucher/add' component={AddVoucher} />
                     <Route path='/voucher/:id' component={UpdateDeleteVoucher} />

@@ -12,7 +12,7 @@ export default class ListBrand extends Component{
                     <td>{brand.brand_name}</td>
                     <td>{brand.quatity}</td>
                     <td>
-                        <Link to='/'>
+                        <Link to={`/brand/${brand.brand_id}`}>
                             <FaEdit />
                         </Link>
                     </td>

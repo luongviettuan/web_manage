@@ -13,7 +13,7 @@ export default class ListProduct extends Component{
                     <td>{product.category_name}</td>
                     <td>{product.brand_name}</td>
                     <td>
-                        <Link to='/'>
+                        <Link to={`/product/${product.product_id}`}>
                             <FaEdit />
                         </Link>
                     </td>

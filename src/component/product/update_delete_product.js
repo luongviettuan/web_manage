@@ -8,7 +8,7 @@ import Title from '../../common/title';
 import ModalInfo from '../../common/modal_info';
 import Axios from 'axios';
 
-export default class AddProduct extends Component {
+export default class UpdateDeleteProduct extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,6 +16,7 @@ export default class AddProduct extends Component {
             listCategory: [],
             listColor: [],
             product: {
+                product_id: '',
                 product_name: '',
                 price: '',
                 brand_id: '',
@@ -31,7 +32,8 @@ export default class AddProduct extends Component {
             message: ''
         }
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
     handleChange(event) {
         const { name, checked,value } = event.target;
@@ -95,8 +97,12 @@ export default class AddProduct extends Component {
 
         }
     }
-    handleSubmit(){
-        Axios.post('http://localhost:8080/product/create_info_product', this.state.product)
+    handleUpdate(){
+        Axios.post('http://localhost:8080/product/update_info_product',
+            {
+                ...this.state.product,
+                product_id: this.props.match.params.id
+            })
             .then(res=>{
                 if(res.data.code === 200){
                     this.setState({
@@ -106,6 +112,24 @@ export default class AddProduct extends Component {
                 }
                 
             })
+        
+    }
+    handleDelete(){
+        const product_id = this.props.match.params.id;
+        if(product_id){
+            Axios.post('http://localhost:8080/product/delete_info_product', {product_id})
+                .then(res=>{
+                    if(res.data.code === 200){
+                        this.setState({
+                            modal: true,
+                            message: res.data.message
+                        })
+                    }
+                    else{
+                        return alert(res.data.message)
+                    }
+                })
+        }
     }
     componentDidMount() {
         Axios.get('http://localhost:8080/brand')
@@ -135,9 +159,55 @@ export default class AddProduct extends Component {
                     })
                 }
             })
+        const product_id = this.props.match.params.id
+        Axios.get(`http://localhost:8080/product/${product_id}`)
+            .then(res =>{
+                if(res.data.code === 200){
+                    const product = res.data.result
+                    let objColor = {};
+                    let objSize = {};
+                    if(product.status === 'Còn Hàng'){
+                        product.status = true
+                    }
+                    else product.status = false;
+                    if(product.color){
+                        product.color.map(color =>{
+                            return objColor = {
+                              ...objColor,
+                              [color]: true
+                            }
+                          })
+                    }
+                    if(product.size){
+                        product.size.map(size =>{
+                            return objSize = {
+                              ...objSize,
+                              [size]: true
+                            }
+                          })
+                    }
+                    this.setState({
+                        product: {
+                            product_id: product.product_id,
+                            product_name: product.product_name,
+                            price: product.price,
+                            brand_id: product.brand_id,
+                            category_id: product.category_id,
+                            product_image_url: product.product_image_url,
+                            status: product.status,
+                            color: {...objColor},
+                            size: {...objSize},
+                            description: product.description,
+                            overview: product.overview
+                        }
+                    })
+                }
+            })
     }
     render() {
-        const { listBrand, listCategory, listColor, modal, message } = this.state;
+        console.log(this.state.product);
+        
+        const { listBrand, listCategory, listColor, product, modal, message } = this.state;
         return (
             <div className="skin-blue sidebar-mini">
                 <div className="wrapper">
@@ -147,8 +217,11 @@ export default class AddProduct extends Component {
                         <Title title='Sản Phẩm' />
                         <section className="content">
                             <div className="row">
-                                <div className="col-xs-4 col-sm-4 offset-10">
-                                    <Button color='success' onClick={this.handleSubmit}>Thêm Mới</Button>{' '}
+                                <div className="col-xs-6 col-sm-6">
+                                <Button color='danger' onClick={this.handleDelete}>Xoá Bỏ</Button>{' '}
+                                </div>
+                                <div className="col-xs-6 col-sm-6 text-right">
+                                    <Button color='success' onClick={this.handleUpdate}>Cập Nhật</Button>{' '}
                                     <Link to='/product'>
                                         <Button color='danger'>Huỷ Bỏ</Button>
                                     </Link>
@@ -242,6 +315,7 @@ export default class AddProduct extends Component {
                                                         className="form-check-input"
                                                         onChange={this.handleChange}
                                                         name="status"
+                                                        checked={product.status === true}
                                                     />
                                                     <label className="form-check-label">
                                                         <strong>Còn Hàng</strong>
@@ -260,6 +334,7 @@ export default class AddProduct extends Component {
                                                                         className="form-check-input"
                                                                         name={"color_" + color.color_name}
                                                                         onChange={this.handleChange}
+                                                                        checked={product.color.hasOwnProperty(color.color_name)}
                                                                     />
                                                                     <label className="form-check-label">
                                                                         <strong>{color.color_name}</strong>
@@ -280,6 +355,7 @@ export default class AddProduct extends Component {
                                                                 name="size_S"
                                                                 className="form-check-input"
                                                                 onChange={this.handleChange}
+                                                                checked={product.size.hasOwnProperty('S')}
                                                             />
                                                             <label className="form-check-label">
                                                                 <strong>S</strong>
@@ -291,6 +367,7 @@ export default class AddProduct extends Component {
                                                                 name="size_M"
                                                                 className="form-check-input"
                                                                 onChange={this.handleChange}
+                                                                checked={product.size.hasOwnProperty('M')}
                                                             />
                                                             <label className="form-check-label">
                                                                 <strong>M</strong>
@@ -302,6 +379,7 @@ export default class AddProduct extends Component {
                                                                 name="size_L"
                                                                 className="form-check-input"
                                                                 onChange={this.handleChange}
+                                                                checked={product.size.hasOwnProperty('L')}
                                                             />
                                                             <label className="form-check-label">
                                                                 <strong>L</strong>
@@ -313,6 +391,7 @@ export default class AddProduct extends Component {
                                                                 name="size_XL"
                                                                 className="form-check-input"
                                                                 onChange={this.handleChange}
+                                                                checked={product.size.hasOwnProperty('XL')}
                                                             />
                                                             <label className="form-check-label">
                                                                 <strong>XL</strong>
@@ -324,6 +403,7 @@ export default class AddProduct extends Component {
                                                                 name="size_XXL"
                                                                 className="form-check-input"
                                                                 onChange={this.handleChange}
+                                                                checked={product.size.hasOwnProperty('XXL')}
                                                             />
                                                             <label className="form-check-label">
                                                                 <strong>XXL</strong>

@@ -9,7 +9,7 @@ import ModalInfo from '../../common/modal_info';
 
 import Axios from 'axios';
 
-export default class AddBrand extends Component {
+export default class UpdateDeleteBrand extends Component {
     constructor(props){
         super(props);
         this.state= {
@@ -19,7 +19,8 @@ export default class AddBrand extends Component {
             message: ''
         }
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
     handleChange(event){
         const {name, value} = event.target;
@@ -36,25 +37,55 @@ export default class AddBrand extends Component {
             })
         }
     }
-    handleSubmit(){
-        const {brand_name, brand_img_url} = this.state;
-        if(brand_name && brand_img_url){
-            Axios.post('http://localhost:8080/brand/create_info_brand',{brand_name, brand_img_url})
-            .then(res=>{
+    handleUpdate(){
+        const brand_id = this.props.match.params.id;
+        const {brand_name, brand_img_url} = this.state
+        if(brand_id && brand_name && brand_img_url){
+            Axios.post('http://localhost:8080/brand/update_info_brand',
+                {brand_id, brand_name, brand_img_url}
+            ).then(res=>{
                 if(res.data.code === 200){
                     this.setState({
-                        message: res.data.message,
-                        modal: true
+                        modal: true,
+                        message: res.data.message
                     })
                 }
-                else{
-                    return alert(res.data.message)
-                }
+                
             })
         }
     }
+    handleDelete(){
+        const brand_id = this.props.match.params.id;
+        if(brand_id){
+            Axios.post('http://localhost:8080/brand/delete_info_brand',{brand_id})
+                .then(res=>{
+                    if(res.data.code === 200){
+                        this.setState({
+                            modal: true,
+                            message: res.data.message
+                        })
+                    }
+                    else{
+                        return alert(res.data.message)
+                    }
+                })
+        }
+    }
+    componentDidMount(){
+        const brand_id = this.props.match.params.id;
+        Axios.post('http://localhost:8080/brand/get_info_brand', {brand_id})
+            .then(res=>{
+                if(res.data.code === 200){
+                    const brand = res.data.result
+                    this.setState({
+                        brand_name: brand.brand_name,
+                        brand_img_url: brand.brand_img_url
+                    })
+                }
+                
+            })
+    }
     render() {
-        console.log(this.state);
         const {modal, message} = this.state
         return (
             <div className="skin-blue sidebar-mini">
@@ -65,8 +96,11 @@ export default class AddBrand extends Component {
                         <Title title='Thương Hiệu' />
                         <section className="content">
                             <div className="row">
-                                <div className="col-xs-4 col-sm-4 offset-10">
-                                    <Button color='success' onClick={this.handleSubmit}>Thêm Mới</Button>{' '}
+                                <div className="col-xs-6 col-sm-6">
+                                <Button color='danger' onClick={this.handleDelete}>Xoá Bỏ</Button>{' '}
+                                </div>
+                                <div className="col-xs-6 col-sm-6 text-right">
+                                    <Button color='success' onClick={this.handleUpdate}>Cập Nhật</Button>{' '}
                                     <Link to='/brand'>
                                         <Button color='danger'>Huỷ Bỏ</Button>
                                     </Link>
@@ -99,6 +133,7 @@ export default class AddBrand extends Component {
                                                     <input
                                                         type="file"
                                                         name="brand_img_url"
+                                                        // value={this.state.brand_img_url}
                                                         onChange={this.handleChange}
                                                         style={{display: 'block'}}
                                                     />
