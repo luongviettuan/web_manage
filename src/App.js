@@ -21,6 +21,7 @@ import UpdateDeleteColor from './component/color/update_delete_color';
 import UpdateDeleteVoucher from './component/voucher/update_delete_voucher';
 import UpdateDeleteBrand from './component/brand/update_delete_brand';
 import UpdateDeleteProduct from './component/product/update_delete_product';
+import Login from './component/login';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
                     <Route path='/color/:id' component={UpdateDeleteColor} />
                     <Route path='/color' component={Color} />
                     <Route path='/order' component={Order} />
+                    <Route path='/login' component={Login} />
                 </Switch>
             </Router>
           )

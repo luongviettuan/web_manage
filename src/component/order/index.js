@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
+import { withCookies } from 'react-cookie';
+import {Redirect} from 'react-router-dom';
 import Header from '../../common/header';
 import MenuLeft from '../../common/menu_left';
 import Title from '../../common/title';
 import ListOrder from './list_order';
 import ModalInfo from '../../common/modal_info';
 import { OrderProvider, OrderContext } from './store/order.context'
-export default class Order extends Component {
+class Order extends Component {
     render() {
-        return (
+        const { cookies } = this.props;
+        const token = cookies.get('token')
+        if(!token) return <Redirect to='/login' />
+        else return (
             <OrderProvider>
                 <div className="skin-blue sidebar-mini">
                     <div className="wrapper">
@@ -93,3 +98,4 @@ export default class Order extends Component {
         )
     }
 }
+export default withCookies(Order)

@@ -2,12 +2,15 @@ import React, {Component} from 'react';
 import Header from '../../common/header';
 import MenuLeft from '../../common/menu_left';
 import Title from '../../common/title';
+import { withCookies } from 'react-cookie';
+import {Redirect} from 'react-router-dom';
 
-
-
-export default class Statistic extends Component{
+class Statistic extends Component{
     render(){
-        return(
+        const { cookies } = this.props;
+        const token = cookies.get('token')
+        if(!token) return <Redirect to='/login' />
+        else return(
             <div className="skin-blue sidebar-mini">
                 <div className="wrapper">
                     <Header />
@@ -76,3 +79,4 @@ export default class Statistic extends Component{
         )
     }
 }
+export default withCookies(Statistic)

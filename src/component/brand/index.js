@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import {Button} from 'reactstrap';
-
+import { withCookies } from 'react-cookie';
 import Header from '../../common/header';
 import MenuLeft from '../../common/menu_left';
 import Title from '../../common/title';
 import ListBrand from '../brand/list_brand'
 import Axios from 'axios';
-export default class Brand extends Component{
+class Brand extends Component{
     constructor(props){
         super(props);
         this.state ={
@@ -50,7 +50,10 @@ export default class Brand extends Component{
     }
     render(){
         const {listBrand} = this.state;
-        return(
+        const { cookies } = this.props;
+        const token = cookies.get('token')
+        if(!token) return <Redirect to='/login' />
+        else return(
             <div className="skin-blue sidebar-mini">
                 <div className="wrapper">
                     <Header />
@@ -120,3 +123,4 @@ export default class Brand extends Component{
         )
     }
 }
+export default withCookies(Brand)

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import {Button} from 'reactstrap'
-
+import { withCookies } from 'react-cookie';
 
 import Header from '../../common/header';
 import MenuLeft from '../../common/menu_left';
@@ -9,7 +9,7 @@ import Title from '../../common/title';
 import ListCategory from './list_category';
 import axios from 'axios';
 
-export default class Category extends Component{
+class Category extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -51,7 +51,10 @@ export default class Category extends Component{
     }
     render(){
         const {listCategory} = this.state;
-        return(
+        const { cookies } = this.props;
+        const token = cookies.get('token')
+        if(!token) return <Redirect to='/login' />
+        else return(
             <div className="skin-blue sidebar-mini">
                 <div className="wrapper">
                     <Header />
@@ -122,3 +125,4 @@ export default class Category extends Component{
         )
     }
 }
+export default withCookies(Category)
